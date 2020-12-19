@@ -17,15 +17,15 @@ program
     const spinner = ora("正在下载模板当中...").start();
 
     // download的
-    //   第一个参数：仓库地址#分支  注意需要改成所需要的格式，不要直接复制粘贴
-    //   第二个参数： 项目名
+    //   第一个参数:仓库地址#分支  注意需要改成所需要的格式，不要直接复制粘贴
+    //   第二个参数: 项目名
     const downLoadUrl = `https://github.com:13168335674/adi-cli-template-vue2-ts#main`;
     download(downLoadUrl, project, { clone: true }, err => {
       if (err) {
         spinner.fail();
         return console.log(
           logSymbols.error,
-          chalk.red("下载失败，失败原因：" + err),
+          chalk.red("下载失败，失败原因:" + err),
         );
       } else {
         spinner.succeed();
@@ -38,7 +38,7 @@ program
   .command("help")
   .description("查看所有可用的模板帮助")
   .action(function () {
-    console.log(`在这里可以书写相关的帮助信息`);
+    console.log(`创建vue项目: adi-cli create <project-name>`);
   });
 
 program.parse(process.argv);
