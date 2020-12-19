@@ -1,0 +1,30 @@
+{
+  "name": "adi-cli",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "ADI <569643843@qq.com>",
+  "license": "MIT",
+  "bin": {
+    "adi-cli": "index.js"
+  },
+  "dependencies": {
+    "commander": "^6.2.1"
+  },
+  "devDependencies": {
+    "add": "^2.0.6",
+    "chalk": "^4.1.0",
+    "download-git-repo": "^3.0.2",
+    "log-symbols": "^4.0.0",
+    "ora": "^5.1.0",
+    "prettier": "2.2.1",
+    "yarn": "^1.22.10"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
+}
