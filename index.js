@@ -3,9 +3,12 @@
 console.log("adi-cli脚手架工具");
 const { program } = require("commander");
 const download = require("download-git-repo");
+const handlebars = require("handlebars");
+const inquirer = require("inquirer");
 const ora = require("ora");
-const chalk = require("chalk");
 const logSymbols = require("log-symbols");
+const chalk = require("chalk");
+const fs = require("fs");
 
 const templates = {
   "vue2+ts": {
@@ -40,7 +43,35 @@ program
         );
       } else {
         spinner.succeed();
-        return console.log(logSymbols.success, chalk.yellow("下载成功"));
+        // 把项目下的package.json文件读取出来
+        // 使用向导的方式采集用户输入的数据解析导
+        // 使用模板引擎把用户输入的数据解析到package.json 文件中
+        // 解析完毕，把解析之后的结果重新写入package.json wenjianzhong
+        inquirer
+          .prompt([
+            {
+              type: "inpute",
+              name: "name",
+              message: "请输入项目名称",
+            },
+            {
+              type: "inpute",
+              name: "description",
+              message: "请输入项目简介",
+            },
+            {
+              type: "inpute",
+              name: "author",
+              message: "请输入作者名称",
+            },
+          ])
+          .then(answers => {
+            const packagePath = `${project}/package.json`;
+            const packageContent = fs.readFileSync(packagePath, "utf8");
+            const packageResult = handlebars.compile(packageContent)(answers);
+            fs.writeFileSync(packagePath, packageResult);
+            console.log(chalk.yellow("初始化模版成功"));
+          });
       }
     });
   });
