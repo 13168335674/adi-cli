@@ -7,20 +7,31 @@ const ora = require("ora");
 const chalk = require("chalk");
 const logSymbols = require("log-symbols");
 
-program.version("1.0.0"); //输出对应的版本号
+const templates = {
+  "vue2+ts": {
+    url: "https://github.com/13168335674/adi-cli-template-vue2-ts",
+    downloadUrl: "https://github.com:13168335674/adi-cli-template-vue2-ts#main",
+    description: "vue2+ts",
+  },
+  "vue2+ts2": {
+    url: "https://github.com/13168335674/adi-cli-template-vue2-ts",
+    downloadUrl: "https://github.com:13168335674/adi-cli-template-vue2-ts#main",
+    description: "vue2+ts 2",
+  },
+};
+
+program.version("1.0.0"); // -v 或者 --versions输出版本号
 
 program
-  .command("create <project>") //
-  .description("初始化项目模板")
-  .action(function (project) {
-    // 在下载前提示
-    const spinner = ora("正在下载模板当中...").start();
-
-    // download的
-    //   第一个参数:仓库地址#分支  注意需要改成所需要的格式，不要直接复制粘贴
-    //   第二个参数: 项目名
-    const downLoadUrl = `https://github.com:13168335674/adi-cli-template-vue2-ts#main`;
-    download(downLoadUrl, project, { clone: true }, err => {
+  .command("create <template> <project>")
+  .description("初始化项目模版")
+  .action((template, project) => {
+    const { downloadUrl } = templates[template] || "";
+    const spinner = ora(`正在下载模版${template}...`).start();
+    if (!downloadUrl) {
+      return console.log(logSymbols.error, chalk.red(`${template}模板不存在`));
+    }
+    download(downloadUrl, project, { clone: true }, err => {
       if (err) {
         spinner.fail();
         return console.log(
@@ -35,10 +46,15 @@ program
   });
 
 program
-  .command("help")
-  .description("查看所有可用的模板帮助")
-  .action(function () {
-    console.log(`创建vue项目: adi-cli create <project-name>`);
+  .command("list")
+  .description("查看所有可用的模版")
+  .action(() => {
+    const listStr = Object.keys(templates).reduce((pre, cur) => {
+      return `${pre}
+  ${cur}
+  `;
+    }, "");
+    console.log(listStr);
   });
 
 program.parse(process.argv);
