@@ -1,21 +1,16 @@
+const path = require("path");
 module.exports = {
-  root: true,
-  env: {
-    node: true,
-  },
+  parser: "@typescript-eslint/parser",
   extends: [
-    "plugin:vue/essential",
-    "eslint:recommended",
-    "@vue/typescript/recommended",
-    "@vue/prettier",
-    "@vue/prettier/@typescript-eslint",
+    "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
   ],
   parserOptions: {
-    ecmaVersion: 2020,
+    project: path.resolve(__dirname, "./tsconfig.json"),
+    tsconfigRootDir: __dirname,
+    ecmaVersion: 2019, // Allows for the parsing of modern ECMAScript features
+    sourceType: "module", // Allows for the use of imports
   },
   rules: {
-    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "comma-dangle": ["error", "only-multiline"],
     "no-control-regex": "off",
     "@typescript-eslint/no-explicit-any": "off",
