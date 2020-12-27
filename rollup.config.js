@@ -2,13 +2,13 @@
  * @Author: ADI
  * @Date: 2020-12-27 14:08:57
  * @LastEditors: ADI
- * @LastEditTime: 2020-12-27 14:09:59
+ * @LastEditTime: 2020-12-27 15:01:38
  */
 const path = require("path");
 const babel = require("rollup-plugin-babel");
 const nodeResolve = require("rollup-plugin-node-resolve");
 const pkg = require("./package.json");
-
+const { preserveShebangs } = require("rollup-plugin-preserve-shebangs");
 const extensions = [".js", ".ts"];
 
 const resolve = function (...args) {
@@ -22,6 +22,7 @@ module.exports = {
     format: "esm",
   },
   plugins: [
+    preserveShebangs(),
     nodeResolve({
       extensions,
       modulesOnly: true,

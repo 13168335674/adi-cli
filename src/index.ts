@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 console.log("adi-cli脚手架工具");
 const { program } = require("commander");
 const download = require("download-git-repo");
