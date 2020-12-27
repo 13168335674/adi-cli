@@ -1,14 +1,5 @@
 #!/usr/bin/env node
 console.log("adi-cli脚手架工具");
-const { program } = require("commander");
-const download = require("download-git-repo");
-const handlebars = require("handlebars");
-const inquirer = require("inquirer");
-const ora = require("ora");
-const logSymbols = require("log-symbols");
-const chalk = require("chalk");
-const fs = require("fs");
-
 const templates = {
   "vue2+ts": {
     url: "https://github.com/13168335674/adi-cli-template-vue2-ts",
@@ -22,7 +13,23 @@ const templates = {
   },
 };
 
-program.version("1.0.0"); // -v 或者 --versions输出版本号
+console.log(`
+  Quick start:
+  adi-cli create <template name> <project name>;
+    - templates: ${Object.keys(templates).map(temp => `'${temp}'`)}
+`);
+
+const { program } = require("commander");
+const download = require("download-git-repo");
+const handlebars = require("handlebars");
+const inquirer = require("inquirer");
+const ora = require("ora");
+const logSymbols = require("log-symbols");
+const chalk = require("chalk");
+const fs = require("fs");
+const pkg = require("../package.json");
+
+program.version(pkg.version); // -v 或者 --versions输出版本号
 
 program
   .command("create <template> <project>")
@@ -31,6 +38,7 @@ program
     const { downloadUrl } = templates[template] || "";
     const spinner = ora(`正在下载模版${template}...`).start();
     if (!downloadUrl) {
+      spinner.fail();
       return console.log(logSymbols.error, chalk.red(`${template}模板不存在`));
     }
     download(downloadUrl, project, { clone: true }, err => {

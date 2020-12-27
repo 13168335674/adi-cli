@@ -1,6 +1,6 @@
 {
   "name": "adi-cli",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "lib/index.js",
   "author": "ADI <569643843@qq.com>",
   "license": "MIT",
