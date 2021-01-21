@@ -14,15 +14,17 @@
     "baseUrl": ".",
     "types": ["webpack-env", "node"],
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["lib/*"],
+      "~/*": ["./*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "resolveJsonModule": true
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
+    "lib/**/*.ts",
+    "lib/**/*.tsx",
+    "lib/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],

@@ -1,0 +1,17 @@
+{
+  "vue2+ts": {
+    "url": "https://github.com/13168335674/adi-cli-template-vue2-ts",
+    "downloadUrl": "https://github.com:13168335674/adi-cli-template-vue2-ts#main",
+    "description": "vue@2.6、typescript@3.9"
+  },
+  "vue3+ts2": {
+    "url": "https://github.com/13168335674/adi-cli-template-vue3-ts",
+    "downloadUrl": "https://github.com:13168335674/adi-cli-template-vue3-ts#main",
+    "description": "vue@3.x、typescript@3.9"
+  },
+  "vue2+vite": {
+    "url": "https://github.com/13168335674/js-module-demo",
+    "downloadUrl": "https://github.com:13168335674/js-module-demo#master",
+    "description": "vue@2.6、vite@1.0-beta.3"
+  }
+}
