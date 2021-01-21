@@ -2,10 +2,10 @@
  * @Author: ADI
  * @Date: 2020-12-30 18:10:07
  * @LastEditors: ADI
- * @LastEditTime: 2021-01-21 22:49:20
+ * @LastEditTime: 2021-01-21 22:57:18
 -->
 <p align="center">
-  <img src="public/images/logo.png" width=150 alt="Logo">
+  <img src="https://raw.githubusercontent.com/13168335674/adi-cli/main/public/images/logo.png" width=150 alt="Logo">
 </p>
 
 [![@fe6/fecli](https://img.shields.io/npm/v/adi-cli.svg?style=flat-square)](https://www.npmjs.com/package/adi-cli) [![NPM downloads](https://img.shields.io/npm/dm/adi-cli?style=flat-square)](https://www.npmjs.com/package/adi-cli) [![NPM downloads](https://img.shields.io/npm/dt/adi-cli?style=flat-square)](https://www.npmjs.com/package/adi-cli)
