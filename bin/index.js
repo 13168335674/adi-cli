@@ -34049,7 +34049,6 @@ function _createProject() {
               message: "please enter a author:",
               default: "author"
             }]).then(function (answers) {
-              console.log("answers", answers);
               var downloadUrl = templates$1[answers.templateType].downloadUrl;
               downloadTemplate(dirName, downloadUrl, answers);
             });
