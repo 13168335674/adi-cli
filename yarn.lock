@@ -5009,6 +5009,13 @@ rollup-plugin-node-resolve@^5.2.0:
     resolve "^1.11.1"
     rollup-pluginutils "^2.8.1"
 
+rollup-plugin-preserve-shebang@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/rollup-plugin-preserve-shebang/download/rollup-plugin-preserve-shebang-1.0.1.tgz#17109cdb4ed12c3cac9379b802182427cdbee5a1"
+  integrity sha1-FxCc207RLDysk3m4AhgkJ82+5aE=
+  dependencies:
+    magic-string "^0.25.7"
+
 rollup-plugin-preserve-shebangs@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/rollup-plugin-preserve-shebangs/-/rollup-plugin-preserve-shebangs-0.2.0.tgz#e48894c1f68c6fd54b0de10bd26906224d5dc7cd"

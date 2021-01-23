@@ -2,7 +2,7 @@
  * @Author: ADI
  * @Date: 2021-01-22 22:46:46
  * @LastEditors: ADI
- * @LastEditTime: 2021-01-22 23:10:28
+ * @LastEditTime: 2021-01-23 11:37:11
 -->
 
 # rollup-ts-babel
@@ -11,7 +11,7 @@
 
 ---
 
-1. 安装依赖 `yarn add -D rollup rollup-plugin-node-resolve`
+1. 安装依赖 `yarn add -D rollup rollup-plugin-node-resolve rollup-plugin-commonjs rollup-plugin-json rollup-plugin-alias`
 2. 添加 rollup.config.js 文件 `/rollup.config.js`
 
 ## 配置 typescript
@@ -65,7 +65,7 @@ yanr add -D husky lint-staged
 
 ```
 "scripts": {
-  "lint": "eslint 'src/**/*.{js,ts}'"
+  "lint": "eslint 'lib/**/*.{js,ts}'"
 },
 "husky": {
   "hooks": {
@@ -73,7 +73,7 @@ yanr add -D husky lint-staged
   }
 },
 "lint-staged": {
-  "*./src/**/*.{js,ts,json,css,less,md}": [
+  "*./lib/**/*.{js,ts,json,css,less,md}": [
     "prettier --write",
     "yarn lint"
   ]
@@ -95,7 +95,7 @@ yanr add -D husky lint-staged
 
 ```
 "scripts": {
-  "lint": "eslint 'src/**/*.{js,ts}'",
+  "lint": "eslint 'lib/**/*.{js,ts}'",
   "dev": "cross-env FORMAT=esm rollup -w -c",
   "build:esm": "cross-env FORMAT=esm rollup -c",
   "build:umd": "cross-env FORMAT=umd rollup -c",
@@ -103,4 +103,16 @@ yanr add -D husky lint-staged
   "build": "rimraf lib/* && run-p build:esm build:umd build:min"
 },
 
+```
+
+## 添加 Shebang: "#!/usr/bin/env node"
+
+1. 编写 rollup 插件, 使用 renderChunk hooks 添加 shebang，解决 eslint 报错 `/lib/plugins/banner.js`
+2. 使用
+
+```
+// in rollup.config.js
+plugins: [
+  banner()
+]
 ```

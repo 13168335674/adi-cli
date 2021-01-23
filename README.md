@@ -2,7 +2,7 @@
  * @Author: ADI
  * @Date: 2020-12-30 18:10:07
  * @LastEditors: ADI
- * @LastEditTime: 2021-01-21 22:57:18
+ * @LastEditTime: 2021-01-23 11:39:48
 -->
 <p align="center">
   <img src="https://raw.githubusercontent.com/13168335674/adi-cli/main/public/images/logo.png" width=150 alt="Logo">
@@ -47,6 +47,7 @@ yarn global add adi-cli
   - [x] 添加指令`-h -help -v -version -list`
   - [x] `adi-cli create <project name>` && adi-cli select templates option
   - [x] log `cd <project name>` && yarn i && git init
+- [adi-cli@1.2 升级文档](changelogs/rollup-ts-babel.md)
 
 ## License
 

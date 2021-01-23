@@ -2,16 +2,18 @@
  * @Author: ADI
  * @Date: 2021-01-22 21:49:29
  * @LastEditors: ADI
- * @LastEditTime: 2021-01-22 23:13:46
+ * @LastEditTime: 2021-01-23 11:54:39
  */
-const nodeResolve = require("rollup-plugin-node-resolve");
 const path = require("path");
 const babel = require("rollup-plugin-babel");
 const uglify = require("rollup-plugin-uglify").uglify;
+const commonjs = require("rollup-plugin-commonjs");
+const nodeResolve = require("rollup-plugin-node-resolve");
+const json = require("rollup-plugin-json");
+const alias = require("rollup-plugin-alias");
 const merge = require("lodash.merge");
 const pkg = require("./package.json");
-import json from "rollup-plugin-json";
-import alias from "rollup-plugin-alias";
+import banner from "./lib/plugins/banner";
 
 const extensions = [".mjs", ".js", ".jsx", ".ts", ".tsx"];
 
@@ -50,7 +52,7 @@ const mergeConfig = jobs[process.env.FORMAT || "esm"];
 
 module.exports = merge(
   {
-    input: resolve("./src/index.ts"),
+    input: resolve("./lib/index.ts"),
     output: {},
     plugins: [
       nodeResolve({
@@ -69,6 +71,11 @@ module.exports = merge(
       }),
       commonjs(),
       json(),
+      // preserveShebangs({
+      //   entry: resolve("./lib/index.ts"),
+      //   shebang: "#!/usr/bin/env node",
+      // }),
+      banner(),
     ],
     watch: {
       include: "lib/**",
