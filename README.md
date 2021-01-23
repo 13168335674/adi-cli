@@ -2,10 +2,10 @@
  * @Author: ADI
  * @Date: 2020-12-30 18:10:07
  * @LastEditors: ADI
- * @LastEditTime: 2021-01-22 09:19:09
+ * @LastEditTime: 2021-01-23 11:39:48
 -->
 <p align="center">
-  <img src="public/images/logo.png" width=150 alt="Logo">
+  <img src="https://raw.githubusercontent.com/13168335674/adi-cli/main/public/images/logo.png" width=150 alt="Logo">
 </p>
 
 [![@adi-cli](https://img.shields.io/npm/v/adi-cli.svg?style=flat-square)](https://www.npmjs.com/package/adi-cli) [![NPM downloads](https://img.shields.io/npm/dm/adi-cli?style=flat-square)](https://www.npmjs.com/package/adi-cli) [![NPM downloads](https://img.shields.io/npm/dt/adi-cli?style=flat-square)](https://www.npmjs.com/package/adi-cli)
@@ -47,6 +47,7 @@ yarn global add adi-cli
   - [x] 添加指令`-h -help -v -version -list`
   - [x] `adi-cli create <project name>` && adi-cli select templates option
   - [x] log `cd <project name>` && yarn i && git init
+- [adi-cli@1.2 升级文档](changelogs/rollup-ts-babel.md)
 
 ## License
 

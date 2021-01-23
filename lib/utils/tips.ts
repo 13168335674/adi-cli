@@ -2,9 +2,9 @@
  * @Author: ADI
  * @Date: 2021-01-21 09:52:57
  * @LastEditors: ADI
- * @LastEditTime: 2021-01-21 22:08:28
+ * @LastEditTime: 2021-01-23 11:31:36
  */
-import chalk from "chalk";
+const chalk = require('chalk');
 
 export default {
   success: msg => console.log(chalk.green.bold(`\n ✅   ${msg}\n`)),

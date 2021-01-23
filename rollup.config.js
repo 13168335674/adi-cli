@@ -1,51 +1,85 @@
 /*
  * @Author: ADI
- * @Date: 2020-12-27 14:08:57
+ * @Date: 2021-01-22 21:49:29
  * @LastEditors: ADI
- * @LastEditTime: 2021-01-21 22:33:40
+ * @LastEditTime: 2021-01-23 11:54:39
  */
-import commonjs from "rollup-plugin-commonjs";
-import json from "rollup-plugin-json";
-import alias from "rollup-plugin-alias";
-import babel from "rollup-plugin-babel";
-import nodeResolve from "rollup-plugin-node-resolve";
-const { preserveShebangs } = require("rollup-plugin-preserve-shebangs");
 const path = require("path");
+const babel = require("rollup-plugin-babel");
+const uglify = require("rollup-plugin-uglify").uglify;
+const commonjs = require("rollup-plugin-commonjs");
+const nodeResolve = require("rollup-plugin-node-resolve");
+const json = require("rollup-plugin-json");
+const alias = require("rollup-plugin-alias");
+const merge = require("lodash.merge");
+const pkg = require("./package.json");
+import banner from "./lib/plugins/banner";
 
-const extensions = [".js", ".jsx", ".ts", ".tsx"];
+const extensions = [".mjs", ".js", ".jsx", ".ts", ".tsx"];
+
 const resolve = function (...args) {
   return path.resolve(__dirname, ...args);
 };
 
-module.exports = {
-  input: resolve("./lib/index.ts"),
-  output: {
-    file: resolve("./", require("./package.json").main), // 为了项目的统一性，这里读取 package.json 中的配置项
-    format: "cjs",
+// 打包任务的个性化配置
+const jobs = {
+  esm: {
+    output: {
+      format: "esm",
+      file: resolve(pkg.module),
+    },
   },
-  plugins: [
-    alias({
-      resolve: extensions,
-      entries: {
-        "@": resolve("lib"),
-      },
-    }),
-    preserveShebangs(),
-    commonjs(),
-    json(),
-    nodeResolve({
-      extensions,
-      // modulesOnly: true,
-    }),
-    babel({
-      runtimeHelpers: true,
-      exclude: "node_modules/**", // only transpile our source code
-      presets: ["@babel/preset-env"],
-      exclude: "node_modules/**",
-      extensions,
-    }),
-  ],
-  watch: {
-    include: "lib/**",
+  umd: {
+    output: {
+      format: "umd",
+      file: resolve(pkg.main),
+      name: "rem",
+    },
+  },
+  min: {
+    output: {
+      format: "umd",
+      file: resolve(pkg.main.replace(/(.\w+)$/, ".min$1")),
+      name: "rem",
+    },
+    plugins: [uglify()],
   },
 };
+
+// 从环境变量获取打包特征
+console.log("process.env.FORMAT", process.env.FORMAT);
+const mergeConfig = jobs[process.env.FORMAT || "esm"];
+
+module.exports = merge(
+  {
+    input: resolve("./lib/index.ts"),
+    output: {},
+    plugins: [
+      nodeResolve({
+        extensions,
+        modulesOnly: true,
+      }),
+      babel({
+        exclude: "node_modules/**",
+        extensions,
+      }),
+      alias({
+        resolve: extensions,
+        entries: {
+          "@": resolve("lib"),
+        },
+      }),
+      commonjs(),
+      json(),
+      // preserveShebangs({
+      //   entry: resolve("./lib/index.ts"),
+      //   shebang: "#!/usr/bin/env node",
+      // }),
+      banner(),
+    ],
+    watch: {
+      include: "lib/**",
+    },
+  },
+  mergeConfig,
+);

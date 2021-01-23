@@ -2,12 +2,12 @@
  * @Author: ADI
  * @Date: 2021-01-21 10:46:01
  * @LastEditors: ADI
- * @LastEditTime: 2021-01-21 22:50:42
+ * @LastEditTime: 2021-01-23 11:31:13
  */
 import { hasDir } from "@/utils/file";
 import { downloadTemplate } from "@/utils/git";
-import inquirer from "inquirer";
 import templates from "../config/templates.json";
+const inquirer = require("inquirer");
 
 export async function createProject(dirName) {
   await hasDir(dirName);
