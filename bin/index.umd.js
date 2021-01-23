@@ -1,44 +1,14 @@
 #!/usr/bin/env node
-(function (factory) {
-  typeof define === 'function' && define.amd ? define(factory) :
-  factory();
-}((function () { 'use strict';
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('@babel/runtime/regenerator'), require('@babel/runtime/helpers/asyncToGenerator')) :
+  typeof define === 'function' && define.amd ? define(['@babel/runtime/regenerator', '@babel/runtime/helpers/asyncToGenerator'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global._regeneratorRuntime, global._asyncToGenerator));
+}(this, (function (_regeneratorRuntime, _asyncToGenerator) { 'use strict';
 
-  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-    try {
-      var info = gen[key](arg);
-      var value = info.value;
-    } catch (error) {
-      reject(error);
-      return;
-    }
+  function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-    if (info.done) {
-      resolve(value);
-    } else {
-      Promise.resolve(value).then(_next, _throw);
-    }
-  }
-
-  function _asyncToGenerator(fn) {
-    return function () {
-      var self = this,
-          args = arguments;
-      return new Promise(function (resolve, reject) {
-        var gen = fn.apply(self, args);
-
-        function _next(value) {
-          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-        }
-
-        function _throw(err) {
-          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-        }
-
-        _next(undefined);
-      });
-    };
-  }
+  var _regeneratorRuntime__default = /*#__PURE__*/_interopDefaultLegacy(_regeneratorRuntime);
+  var _asyncToGenerator__default = /*#__PURE__*/_interopDefaultLegacy(_asyncToGenerator);
 
   /*
    * @Author: ADI
@@ -92,7 +62,7 @@
 
   var fs$1 = require("fs");
 
-  var program = require("commander");
+  require("commander");
 
   var download = require("download-git-repo");
 
@@ -152,8 +122,8 @@
   }
 
   function _createProject() {
-    _createProject = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(dirName) {
-      return regeneratorRuntime.wrap(function _callee$(_context) {
+    _createProject = _asyncToGenerator__default['default']( /*#__PURE__*/_regeneratorRuntime__default['default'].mark(function _callee(dirName) {
+      return _regeneratorRuntime__default['default'].wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
@@ -239,20 +209,20 @@
   var packageInfo = require("../package.json"); // https://www.npmjs.com/package/commander
 
 
-  var program$1 = require("commander");
+  var program = require("commander");
 
-  program$1.version(packageInfo.version, "-v, --version");
-  program$1.command("create <projectName>").description("create project").alias("c").action(function (projectName) {
+  program.version(packageInfo.version, "-v, --version");
+  program.command("create <projectName>").description("create project").alias("c").action(function (projectName) {
     return createProject(projectName);
   });
-  program$1.command("list").description("view the list of templates").alias("l").action(function () {
+  program.command("list").description("view the list of templates").alias("l").action(function () {
     showTemplatesList();
   }); // 其他参数
 
-  program$1.parse(process.argv);
+  program.parse(process.argv);
 
-  if (!program$1.args.length) {
-    program$1.help();
+  if (!program.args.length) {
+    program.help();
   }
 
 })));

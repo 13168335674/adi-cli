@@ -6,7 +6,7 @@
   "author": "ADI <569643843@qq.com>",
   "license": "MIT",
   "bin": {
-    "adi-cli": "bin/index.esm.js"
+    "adi-cli": "bin/index.umd.js"
   },
   "bugs": {
     "url": "https://github.com/13168335674/adi-cli/issues"
@@ -14,7 +14,7 @@
   "homepage": "https://github.com/13168335674/adi-cli#readme",
   "scripts": {
     "lint": "eslint 'lib/**/*.{js,ts}'",
-    "dev": "cross-env FORMAT=esm rollup -w -c",
+    "dev": "cross-env FORMAT=umd rollup -w -c",
     "build:esm": "cross-env FORMAT=esm rollup -c",
     "build:umd": "cross-env FORMAT=umd rollup -c",
     "build:min": "cross-env FORMAT=min rollup -c",

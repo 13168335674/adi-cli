@@ -1,39 +1,6 @@
 #!/usr/bin/env node
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
-
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-
-      _next(undefined);
-    });
-  };
-}
+import _regeneratorRuntime from '@babel/runtime/regenerator';
+import _asyncToGenerator from '@babel/runtime/helpers/asyncToGenerator';
 
 /*
  * @Author: ADI
@@ -87,7 +54,7 @@ var tips = {
 
 var fs$1 = require("fs");
 
-var program = require("commander");
+require("commander");
 
 var download = require("download-git-repo");
 
@@ -147,8 +114,8 @@ function createProject(_x) {
 }
 
 function _createProject() {
-  _createProject = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(dirName) {
-    return regeneratorRuntime.wrap(function _callee$(_context) {
+  _createProject = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee(dirName) {
+    return _regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
@@ -234,18 +201,18 @@ console.log("\n\n    ___    ____  ____   ________    ____\n   /   |  / __ /  _/ 
 var packageInfo = require("../package.json"); // https://www.npmjs.com/package/commander
 
 
-var program$1 = require("commander");
+var program = require("commander");
 
-program$1.version(packageInfo.version, "-v, --version");
-program$1.command("create <projectName>").description("create project").alias("c").action(function (projectName) {
+program.version(packageInfo.version, "-v, --version");
+program.command("create <projectName>").description("create project").alias("c").action(function (projectName) {
   return createProject(projectName);
 });
-program$1.command("list").description("view the list of templates").alias("l").action(function () {
+program.command("list").description("view the list of templates").alias("l").action(function () {
   showTemplatesList();
 }); // 其他参数
 
-program$1.parse(process.argv);
+program.parse(process.argv);
 
-if (!program$1.args.length) {
-  program$1.help();
+if (!program.args.length) {
+  program.help();
 }

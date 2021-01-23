@@ -2,7 +2,7 @@
  * @Author: ADI
  * @Date: 2021-01-22 21:49:29
  * @LastEditors: ADI
- * @LastEditTime: 2021-01-23 11:54:39
+ * @LastEditTime: 2021-01-23 12:20:49
  */
 const path = require("path");
 const babel = require("rollup-plugin-babel");
@@ -60,6 +60,7 @@ module.exports = merge(
         modulesOnly: true,
       }),
       babel({
+        runtimeHelpers: true,
         exclude: "node_modules/**",
         extensions,
       }),
