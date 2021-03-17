@@ -2,7 +2,7 @@
  * @Author: ADI
  * @Date: 2021-01-22 21:49:29
  * @LastEditors: ADI
- * @LastEditTime: 2021-01-23 12:20:49
+ * @LastEditTime: 2021-03-17 11:04:12
  */
 const path = require("path");
 const babel = require("rollup-plugin-babel");
@@ -13,9 +13,10 @@ const json = require("rollup-plugin-json");
 const alias = require("rollup-plugin-alias");
 const merge = require("lodash.merge");
 const pkg = require("./package.json");
-import banner from "./lib/plugins/banner";
+// import banner from "./lib/plugins/banner";
 
 const extensions = [".mjs", ".js", ".jsx", ".ts", ".tsx"];
+const banner = "#!/usr/bin/env node";
 
 const resolve = function (...args) {
   return path.resolve(__dirname, ...args);
@@ -27,20 +28,23 @@ const jobs = {
     output: {
       format: "esm",
       file: resolve(pkg.module),
+      banner,
     },
   },
   umd: {
     output: {
       format: "umd",
       file: resolve(pkg.main),
-      name: "rem",
+      name: "adi-cli",
+      banner,
     },
   },
   min: {
     output: {
       format: "umd",
       file: resolve(pkg.main.replace(/(.\w+)$/, ".min$1")),
-      name: "rem",
+      name: "adi-cli",
+      banner,
     },
     plugins: [uglify()],
   },
@@ -76,7 +80,7 @@ module.exports = merge(
       //   entry: resolve("./lib/index.ts"),
       //   shebang: "#!/usr/bin/env node",
       // }),
-      banner(),
+      // banner(),
     ],
     watch: {
       include: "lib/**",
