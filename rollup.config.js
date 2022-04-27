@@ -1,19 +1,20 @@
 /*
  * @Author: ADI
  * @Date: 2021-01-22 21:49:29
- * @LastEditors: ADI
- * @LastEditTime: 2021-03-17 11:04:12
+ * @LastEditors  : Please set LastEditors
+ * @LastEditTime : 2022-04-27 15:48:34
  */
-const path = require("path");
-const babel = require("rollup-plugin-babel");
-const uglify = require("rollup-plugin-uglify").uglify;
-const commonjs = require("rollup-plugin-commonjs");
-const nodeResolve = require("rollup-plugin-node-resolve");
-const json = require("rollup-plugin-json");
-const alias = require("rollup-plugin-alias");
-const merge = require("lodash.merge");
-const pkg = require("./package.json");
+import path from "path";
+import babel from "@rollup/plugin-babel";
+import {uglify} from "rollup-plugin-uglify";
+import commonjs from "@rollup/plugin-commonjs";
+import nodeResolve from "@rollup/plugin-node-resolve";
+import json from "rollup-plugin-json";
+import alias from '@rollup/plugin-alias';
+import {merge} from "lodash";
+import pkg from "./package.json";
 // import banner from "./lib/plugins/banner";
+console.log(`ADI-LOG => babel`, babel);
 
 const extensions = [".mjs", ".js", ".jsx", ".ts", ".tsx"];
 const banner = "#!/usr/bin/env node";
@@ -64,7 +65,6 @@ module.exports = merge(
         modulesOnly: true,
       }),
       babel({
-        runtimeHelpers: true,
         exclude: "node_modules/**",
         extensions,
       }),

@@ -12,10 +12,11 @@ console.log(`
 
 import { createProject } from "@/cmd/create";
 import { showTemplatesList } from "@/cmd/list";
-const packageInfo = require("../package.json");
+import packageInfo from "../package.json";
 
 // https://www.npmjs.com/package/commander
-const program = require("commander");
+import program from "commander";
+import shell from "shelljs";
 
 program.version(packageInfo.version, "-v, --version");
 
@@ -31,6 +32,18 @@ program
   .alias("l")
   .action(() => {
     showTemplatesList();
+  });
+
+program
+  .command("dev")
+  .description("dev")
+  .alias("d")
+  .action(() => {
+    console.log(`ADI-LOG => cwd`, process.cwd());
+    if (shell.exec('git commit -am "Auto-commit"').code !== 0) {
+      shell.echo("Error: Git commit failed");
+      shell.exit(1);
+    }
   });
 
 // 其他参数

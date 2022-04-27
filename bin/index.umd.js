@@ -1,14 +1,50 @@
 #!/usr/bin/env node
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('@babel/runtime/regenerator'), require('@babel/runtime/helpers/asyncToGenerator')) :
-  typeof define === 'function' && define.amd ? define(['@babel/runtime/regenerator', '@babel/runtime/helpers/asyncToGenerator'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global._regeneratorRuntime, global._asyncToGenerator));
-}(this, (function (_regeneratorRuntime, _asyncToGenerator) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('commander'), require('shelljs')) :
+  typeof define === 'function' && define.amd ? define(['commander', 'shelljs'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.program, global.shell));
+})(this, (function (program, shell) { 'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-  var _regeneratorRuntime__default = /*#__PURE__*/_interopDefaultLegacy(_regeneratorRuntime);
-  var _asyncToGenerator__default = /*#__PURE__*/_interopDefaultLegacy(_asyncToGenerator);
+  var program__default = /*#__PURE__*/_interopDefaultLegacy(program);
+  var shell__default = /*#__PURE__*/_interopDefaultLegacy(shell);
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+    try {
+      var info = gen[key](arg);
+      var value = info.value;
+    } catch (error) {
+      reject(error);
+      return;
+    }
+
+    if (info.done) {
+      resolve(value);
+    } else {
+      Promise.resolve(value).then(_next, _throw);
+    }
+  }
+
+  function _asyncToGenerator(fn) {
+    return function () {
+      var self = this,
+          args = arguments;
+      return new Promise(function (resolve, reject) {
+        var gen = fn.apply(self, args);
+
+        function _next(value) {
+          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+        }
+
+        function _throw(err) {
+          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+        }
+
+        _next(undefined);
+      });
+    };
+  }
 
   /*
    * @Author: ADI
@@ -16,15 +52,15 @@
    * @LastEditors: ADI
    * @LastEditTime: 2021-01-23 11:32:37
    */
-  var fs = require("fs");
+  var fs$1 = require("fs");
 
-  var chalk = require("chalk");
+  var chalk$1 = require("chalk");
 
   function hasDir(dirName) {
     return new Promise(function (resolve, reject) {
-      fs.exists(dirName, function (error) {
+      fs$1.exists(dirName, function (error) {
         if (error) {
-          console.log(chalk.red("The ".concat(dirName, " folder already exists in the current directory. Please try to use another project name!")));
+          console.log(chalk$1.red("The ".concat(dirName, " folder already exists in the current directory. Please try to use another project name!")));
           process.exit(1);
         } else {
           resolve("");
@@ -39,17 +75,17 @@
    * @LastEditors: ADI
    * @LastEditTime: 2021-01-23 11:31:36
    */
-  var chalk$1 = require('chalk');
+  var chalk = require('chalk');
 
   var tips = {
     success: function success(msg) {
-      return console.log(chalk$1.green.bold("\n \u2705   ".concat(msg, "\n")));
+      return console.log(chalk.green.bold("\n \u2705   ".concat(msg, "\n")));
     },
     fail: function fail(msg) {
-      return console.log(chalk$1.red.bold("\n \u274C   ".concat(msg, "\n")));
+      return console.log(chalk.red.bold("\n \u274C   ".concat(msg, "\n")));
     },
     info: function info(msg) {
-      return console.log(chalk$1.yellow("\n \uD83C\uDF08   ".concat(msg, "\n")));
+      return console.log(chalk.yellow("\n \uD83C\uDF08   ".concat(msg, "\n")));
     }
   };
 
@@ -60,7 +96,7 @@
    * @LastEditTime: 2021-01-21 22:44:44
    */
 
-  var fs$1 = require("fs");
+  var fs = require("fs");
 
   require("commander");
 
@@ -89,9 +125,9 @@
         author: mate.author
       };
       var fileName = "".concat(dirName, "/package.json");
-      var content = fs$1.readFileSync(fileName).toString();
+      var content = fs.readFileSync(fileName).toString();
       var result = handlebars.compile(content)(meta);
-      fs$1.writeFileSync(fileName, result);
+      fs.writeFileSync(fileName, result);
       tips.success("".concat(dirName, " project created!"));
       tips.info("cd ".concat(dirName, " && yarn install"));
     });
@@ -122,8 +158,8 @@
   }
 
   function _createProject() {
-    _createProject = _asyncToGenerator__default['default']( /*#__PURE__*/_regeneratorRuntime__default['default'].mark(function _callee(dirName) {
-      return _regeneratorRuntime__default['default'].wrap(function _callee$(_context) {
+    _createProject = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(dirName) {
+      return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
@@ -204,25 +240,144 @@
     tableList(templates);
   }
 
+  var name = "adi-cli";
+  var version = "1.2.0";
+  var main = "bin/index.umd.js";
+  var module = "bin/index.esm.js";
+  var author = "ADI <569643843@qq.com>";
+  var license = "MIT";
+  var bin = {
+  	"adi-cli": "bin/index.umd.js"
+  };
+  var bugs = {
+  	url: "https://github.com/13168335674/adi-cli/issues"
+  };
+  var homepage = "https://github.com/13168335674/adi-cli#readme";
+  var scripts = {
+  	lint: "eslint 'lib/**/*.{js,ts}'",
+  	dev: "cross-env FORMAT=umd rollup -w -c",
+  	"build:esm": "cross-env FORMAT=esm rollup -c",
+  	"build:umd": "cross-env FORMAT=umd rollup -c",
+  	"build:min": "cross-env FORMAT=min rollup -c",
+  	build: "rimraf bin/* && run-p build:esm build:umd build:min"
+  };
+  var dependencies = {
+  	"cli-table": "^0.3.4",
+  	commander: "^6.2.1",
+  	"cross-env": "^7.0.3",
+  	shelljs: "^0.8.5"
+  };
+  var devDependencies = {
+  	"@babel/core": "^7.14.6",
+  	"@babel/plugin-transform-runtime": "^7.12.10",
+  	"@babel/preset-env": "^7.14.7",
+  	"@babel/preset-typescript": "^7.12.7",
+  	"@rollup/plugin-alias": "^3.1.2",
+  	"@rollup/plugin-babel": "^5.3.0",
+  	"@rollup/plugin-commonjs": "^14.0.0",
+  	"@rollup/plugin-node-resolve": "^9.0.0",
+  	"@rollup/plugin-replace": "^4.0.0",
+  	"@types/node": "^17.0.29",
+  	"@typescript-eslint/eslint-plugin": "^4.14.0",
+  	"@typescript-eslint/parser": "^4.14.0",
+  	"@vue/cli-plugin-babel": "^4.5.13",
+  	"@vue/cli-service": "^4.5.13",
+  	add: "^2.0.6",
+  	autoprefixer: "^9.0.0",
+  	"babel-cli": "^6.26.0",
+  	"babel-env": "^2.4.1",
+  	chalk: "^4.1.0",
+  	"cross-env": "^7.0.3",
+  	"download-git-repo": "^3.0.2",
+  	eslint: "^7.18.0",
+  	express: "^4.17.3",
+  	glob: "^7.2.0",
+  	handlebars: "^4.7.6",
+  	husky: "^4.3.8",
+  	ini: "^2.0.0",
+  	inquirer: "^7.3.3",
+  	"lint-staged": "^10.5.3",
+  	"lodash.merge": "^4.6.2",
+  	"log-symbols": "^4.0.0",
+  	minimist: "^1.2.5",
+  	"node-sass": "^7.0.1",
+  	"npm-run-all": "^4.1.5",
+  	ora: "^5.1.0",
+  	postcss: "8.1.9",
+  	"postcss-loader": "4.1.0",
+  	prettier: "^2.6.2",
+  	rimraf: "^3.0.2",
+  	rollup: "^2.52.8",
+  	"rollup-plugin-alias": "^2.2.0",
+  	"rollup-plugin-babel": "^4.4.0",
+  	"rollup-plugin-commonjs": "^10.1.0",
+  	"rollup-plugin-copy": "^3.4.0",
+  	"rollup-plugin-css-only": "^3.1.0",
+  	"rollup-plugin-json": "^4.0.0",
+  	"rollup-plugin-node-resolve": "^5.2.0",
+  	"rollup-plugin-postcss": "^4.0.2",
+  	"rollup-plugin-preserve-shebang": "^1.0.1",
+  	"rollup-plugin-preserve-shebangs": "^0.2.0",
+  	"rollup-plugin-scss": "3",
+  	"rollup-plugin-terser": "^7.0.2",
+  	"rollup-plugin-typescript2": "^0.29.0",
+  	"rollup-plugin-uglify": "^6.0.4",
+  	"rollup-plugin-vue": "^5.1.9",
+  	sass: "^1.49.0",
+  	typescript: "^4.1.3",
+  	vue: "^2.6.14",
+  	"vue-template-compiler": "^2.6.14",
+  	ws: "^8.5.0",
+  	yarn: "^1.22.10"
+  };
+  var husky = {
+  	hooks: {
+  		"pre-commit": "lint-staged"
+  	}
+  };
+  var packageInfo = {
+  	name: name,
+  	version: version,
+  	main: main,
+  	module: module,
+  	author: author,
+  	license: license,
+  	bin: bin,
+  	bugs: bugs,
+  	homepage: homepage,
+  	scripts: scripts,
+  	dependencies: dependencies,
+  	devDependencies: devDependencies,
+  	husky: husky,
+  	"lint-staged": {
+  	"*./lib/**/*.{js,ts,json,css,less,md}": [
+  		"prettier --write",
+  		"yarn lint"
+  	]
+  }
+  };
+
   console.log("\n\n    ___    ____  ____   ________    ____\n   /   |  / __ /  _/  / ____/ /   /  _/\n  / /| | / / / // /   / /   / /    / /\n / ___ |/ /_/ // /   / /___/ /____/ /\n/_/  |_/_____/___/   ____/_____/___/\n\n");
-
-  var packageInfo = require("../package.json"); // https://www.npmjs.com/package/commander
-
-
-  var program = require("commander");
-
-  program.version(packageInfo.version, "-v, --version");
-  program.command("create <projectName>").description("create project").alias("c").action(function (projectName) {
+  program__default["default"].version(packageInfo.version, "-v, --version");
+  program__default["default"].command("create <projectName>").description("create project").alias("c").action(function (projectName) {
     return createProject(projectName);
   });
-  program.command("list").description("view the list of templates").alias("l").action(function () {
+  program__default["default"].command("list").description("view the list of templates").alias("l").action(function () {
     showTemplatesList();
+  });
+  program__default["default"].command("dev").description("dev").alias("d").action(function () {
+    console.log("ADI-LOG => cwd", process.cwd());
+
+    if (shell__default["default"].exec('git commit -am "Auto-commit"').code !== 0) {
+      shell__default["default"].echo("Error: Git commit failed");
+      shell__default["default"].exit(1);
+    }
   }); // 其他参数
 
-  program.parse(process.argv);
+  program__default["default"].parse(process.argv);
 
-  if (!program.args.length) {
-    program.help();
+  if (!program__default["default"].args.length) {
+    program__default["default"].help();
   }
 
-})));
+}));
