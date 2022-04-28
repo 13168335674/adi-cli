@@ -2,19 +2,18 @@
  * @Author: ADI
  * @Date: 2021-01-22 21:49:29
  * @LastEditors  : Please set LastEditors
- * @LastEditTime : 2022-04-27 15:48:34
+ * @LastEditTime : 2022-04-28 13:36:56
  */
 import path from "path";
 import babel from "@rollup/plugin-babel";
-import {uglify} from "rollup-plugin-uglify";
+import { uglify } from "rollup-plugin-uglify";
 import commonjs from "@rollup/plugin-commonjs";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import json from "rollup-plugin-json";
-import alias from '@rollup/plugin-alias';
-import {merge} from "lodash";
+import alias from "@rollup/plugin-alias";
+import { merge } from "lodash";
 import pkg from "./package.json";
 // import banner from "./lib/plugins/banner";
-console.log(`ADI-LOG => babel`, babel);
 
 const extensions = [".mjs", ".js", ".jsx", ".ts", ".tsx"];
 const banner = "#!/usr/bin/env node";
@@ -66,6 +65,7 @@ module.exports = merge(
       }),
       babel({
         exclude: "node_modules/**",
+        babelHelpers: "bundled",
         extensions,
       }),
       alias({
