@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('commander'), require('shelljs')) :
-  typeof define === 'function' && define.amd ? define(['commander', 'shelljs'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.program, global.shell));
-})(this, (function (program, shell) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('commander')) :
+  typeof define === 'function' && define.amd ? define(['commander'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.program));
+})(this, (function (program) { 'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
   var program__default = /*#__PURE__*/_interopDefaultLegacy(program);
-  var shell__default = /*#__PURE__*/_interopDefaultLegacy(shell);
 
   function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
     try {
@@ -240,6 +239,43 @@
     tableList(templates);
   }
 
+  var loadConfigFile = require("rollup/dist/loadConfigFile.js");
+
+  var path = require("path");
+
+  var rollup = require("rollup");
+
+  var build = function build() {
+    var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+      useWatch: false
+    };
+    // load the config file next to the current script;
+    // the provided config object has the same effect as passing "--format es"
+    // on the command line and will override the format of all outputs
+    loadConfigFile(path.resolve(__dirname, "../lib/cmd/build/", "rollup.config.js"), {
+      format: "es"
+    }).then(function (_ref) {
+      var options = _ref.options,
+          warnings = _ref.warnings;
+      // "warnings" wraps the default `onwarn` handler passed by the CLI.
+      // This prints all warnings up to this point:
+      // console.log(`We currently have ${warnings.count} warnings`);
+      // This prints all deferred warnings
+      warnings.flush(); // options is an "inputOptions" object with an additional "output"
+      // property that contains an array of "outputOptions".
+      // The following will generate all outputs and write them to disk the same
+      // way the CLI does it:
+
+      options.map(function (options) {
+        rollup.rollup(options).then(function (bundle) {
+          Promise.all(options.output.map(bundle.write)); // You can also pass this directly to "rollup.watch"
+
+          config.useWatch && rollup.watch(options);
+        });
+      });
+    });
+  };
+
   var name = "adi-cli";
   var version = "1.2.0";
   var main = "bin/index.umd.js";
@@ -263,15 +299,16 @@
   };
   var dependencies = {
   	"cli-table": "^0.3.4",
-  	commander: "^6.2.1",
+  	commander: "6.2.1",
   	"cross-env": "^7.0.3",
   	shelljs: "^0.8.5"
   };
   var devDependencies = {
-  	"@babel/core": "^7.14.6",
-  	"@babel/plugin-transform-runtime": "^7.12.10",
-  	"@babel/preset-env": "^7.14.7",
-  	"@babel/preset-typescript": "^7.12.7",
+  	"@babel/core": "7.16.0",
+  	"@babel/plugin-proposal-class-properties": "7.16.0",
+  	"@babel/plugin-proposal-object-rest-spread": "7.16.0",
+  	"@babel/preset-env": "7.16.0",
+  	"@babel/preset-typescript": "7.16.0",
   	"@rollup/plugin-alias": "^3.1.2",
   	"@rollup/plugin-babel": "^5.3.0",
   	"@rollup/plugin-commonjs": "^14.0.0",
@@ -307,7 +344,7 @@
   	"postcss-loader": "4.1.0",
   	prettier: "^2.6.2",
   	rimraf: "^3.0.2",
-  	rollup: "^2.52.8",
+  	rollup: "^2.70.2",
   	"rollup-plugin-alias": "^2.2.0",
   	"rollup-plugin-babel": "^4.4.0",
   	"rollup-plugin-commonjs": "^10.1.0",
@@ -324,7 +361,7 @@
   	"rollup-plugin-uglify": "^6.0.4",
   	"rollup-plugin-vue": "^5.1.9",
   	sass: "^1.49.0",
-  	typescript: "^4.1.3",
+  	typescript: "^4.6.3",
   	vue: "^2.6.14",
   	"vue-template-compiler": "^2.6.14",
   	ws: "^8.5.0",
@@ -365,13 +402,17 @@
   program__default["default"].command("list").description("view the list of templates").alias("l").action(function () {
     showTemplatesList();
   });
-  program__default["default"].command("dev").description("dev").alias("d").action(function () {
-    console.log("ADI-LOG => cwd", process.cwd());
-
-    if (shell__default["default"].exec('git commit -am "Auto-commit"').code !== 0) {
-      shell__default["default"].echo("Error: Git commit failed");
-      shell__default["default"].exit(1);
-    }
+  program__default["default"].command("dev").description("dev server.").action(function () {
+    process.env.NODE_ENV = "development";
+    build({
+      useWatch: true
+    });
+  });
+  program__default["default"].command("build").description("build project.").action(function () {
+    process.env.NODE_ENV = "production";
+    build({
+      useWatch: false
+    });
   }); // 其他参数
 
   program__default["default"].parse(process.argv);

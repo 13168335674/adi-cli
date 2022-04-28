@@ -12,6 +12,7 @@ console.log(`
 
 import { createProject } from "@/cmd/create";
 import { showTemplatesList } from "@/cmd/list";
+import { build } from "@/cmd/build";
 import packageInfo from "../package.json";
 
 // https://www.npmjs.com/package/commander
@@ -36,14 +37,18 @@ program
 
 program
   .command("dev")
-  .description("dev")
-  .alias("d")
+  .description("dev server.")
   .action(() => {
-    console.log(`ADI-LOG => cwd`, process.cwd());
-    if (shell.exec('git commit -am "Auto-commit"').code !== 0) {
-      shell.echo("Error: Git commit failed");
-      shell.exit(1);
-    }
+    process.env.NODE_ENV = "development";
+    build({ useWatch: true });
+  });
+
+program
+  .command("build")
+  .description("build project.")
+  .action(() => {
+    process.env.NODE_ENV = "production";
+    build({ useWatch: false });
   });
 
 // 其他参数
