@@ -1,6 +1,6 @@
 {
   "name": "adi-cli",
-  "version": "1.3.10",
+  "version": "1.4.0",
   "main": "bin/index.umd.js",
   "module": "bin/index.esm.js",
   "author": "ADI <569643843@qq.com>",
